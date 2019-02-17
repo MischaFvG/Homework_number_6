@@ -16,19 +16,23 @@ public class Main {
     }
 
     private static int numUniqueEmails(String[] emails) {
-        for (int i = 0; i < emails.length; i++) {
-            if (emails[i].contains(".")) {
-                emails[i] = emails[i].replace(".", "");
-            }
-            if (emails[i].contains("+")) {
-                emails[i] = emails[i].replace(emails[i].substring(emails[i].indexOf("+"), emails[i].indexOf("@")), "");
-            }
+        String[] stringArrayOfEmails = new String[emails.length];
+        for (int i = 0; i < stringArrayOfEmails.length; i++) {
+            stringArrayOfEmails[i] = emails[i].substring(0, emails[i].indexOf("@"));
         }
-        System.out.println(Arrays.toString(emails));
-        Set<String> stringSet = new HashSet<>();
-        stringSet.addAll(Arrays.asList(emails));
-        System.out.println(stringSet);
-        return stringSet.size();
+        for (int i = 0; i < stringArrayOfEmails.length; i++) {
+            if (stringArrayOfEmails[i].contains(".")) {
+                stringArrayOfEmails[i] = stringArrayOfEmails[i].replace(".", "");
+            }
+            if (stringArrayOfEmails[i].contains("+")) {
+                stringArrayOfEmails[i] = stringArrayOfEmails[i].substring(0, stringArrayOfEmails[i].indexOf("+"));
+            }
+            stringArrayOfEmails[i] = stringArrayOfEmails[i] + emails[i].substring(emails[i].indexOf("@"));
+        }
+        System.out.println(Arrays.toString(stringArrayOfEmails));
+        Set<String> emailsSet = new HashSet<>();
+        emailsSet.addAll(Arrays.asList(stringArrayOfEmails));
+        return emailsSet.size();
     }
 
     private static int uniqueMorseCode(String[] morse) {
